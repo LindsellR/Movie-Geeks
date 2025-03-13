@@ -1,18 +1,1 @@
-URL: /
-Timestamp: Tue Mar 11 2025 16:30:52 GMT+1100 (Australian Eastern Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Mar 11 2025 16:30:52 GMT+1100 (Australian Eastern Daylight Time)
-
-URL: /
-Timestamp: Tue Mar 11 2025 16:31:06 GMT+1100 (Australian Eastern Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Mar 11 2025 16:31:06 GMT+1100 (Australian Eastern Daylight Time)
-
-URL: /documentation
-Timestamp: Tue Mar 11 2025 16:32:09 GMT+1100 (Australian Eastern Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Mar 11 2025 16:32:09 GMT+1100 (Australian Eastern Daylight Time)
-
+::1 - - [13/Mar/2025:00:52:38 +0000] "GET /secreturl HTTP/1.1" 200 51 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15"
