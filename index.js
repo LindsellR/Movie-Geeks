@@ -18,12 +18,13 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res, next) => {
-  if (req.path(-1) === '/' && req.path.length > 1) {
-    res.redirect(301, req.path.slice(0, -1) + req.url.slice(req.path.length));
+  if (/\/$/.test(req.path) && req.path.length > 1) {
+    res.redirect(301, req.path.replace(/\/+$/, '') + req.url.slice(req.path.length));
   } else {
     next();
   }
 });
+
 
  //Error message
 app.use((err, req, res, next) => {
