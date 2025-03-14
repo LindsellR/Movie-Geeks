@@ -8,7 +8,8 @@ app.use(bodyParser.json());
 
 let students = [
     {
-        id:1 'Jessica Drake',
+        id:1,
+        name: 'Jessica Drake',
         classes: {
             biology: 95,
             algebra: 92
@@ -25,7 +26,7 @@ let students = [
     {
         id: 3,
         name: 'Lisa Downing',
-        classes{
+        classes: {
             biology: 95,
             algebra: 92
         }
@@ -34,7 +35,7 @@ let students = [
 // Gets the list of data about All students
 
 app.get('/students', (req, res) => {
-    res.json(students.find((student) =>
+    res.json(students)
 });
 
 
@@ -52,11 +53,11 @@ app.post('/students', (req, res) => {
 
     if (!newStudent.name) {
         const message = 'Missing name in request body';
-        res.status(400.send(message);)
+        res.status(400).send(message);
     } else {
         newStudent.id = uuid.v4();
         students.push(newStudent);
-        res.status(201.send(newStudent);
+        res.status(201).send(newStudent);
     }
 });
 
@@ -66,7 +67,7 @@ app.delete('/students/:id', (req, res) => {
     
     if (student) {
         students = students.filter((obj) => { return obj.id !== req.params.id });
-        res.status(201.send('Student ' + req.params.id + ' was deleted.');
+        res.status(201).send('Student ' + req.params.id + ' was deleted.');
     }
 });
 
@@ -85,7 +86,7 @@ app.put('students/:name/:class/:grade', (req, res) => {
 });
 
 //gets GPA of a student
-app.get('/students/:name/:gpa' (req, res) => {
+app.get('/students/:name/:gpa', (req, res) => {
     let student = students.find((student) => { return student.name === req.params.name
     });
 
@@ -99,7 +100,7 @@ app.get('/students/:name/:gpa' (req, res) => {
     let gpa = sumOfGrades / classesGrades.length;
     console.log(sumOfGrades);
     console.log(gpa);
-    res.status(404.send('Student with the name ' + req.params.name + ' was not found.');
+    res.status(404).send('Student with the name ' + req.params.name + ' was not found.');
     }
 });
 
