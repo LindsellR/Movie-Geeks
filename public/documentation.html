@@ -1,16 +1,141 @@
 <!DOCTYPE html>
 <html>
-  <html lang="en"></html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Movie Geeks Home Page</title>
-    </head>
-<body>
-<h1 class="Title">Movie Geek</h1>
-<p class="Description">Welcome to my movie app. In the app you will find all sorts of information about your favorite movies, directors, actors, writers and lots more. Sign up and create lists of your favourite films or search genre’s to find films you might want to watch, all from the one place.</p>
+<html lang="en">
 
-<script>src="js/scripts.js"</script>
+</html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Geeks Home Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    table {
+    width: 100%;
+}
+
+table,
+th, 
+td {
+    padding: 20px;
+    text-align: left;
+}
+  </style>
+</head>
+
+<body>
+  <h1 class="Title">Movie Geek Documentation</h1>
+  <p class="Description">Welcome to my movie app. In the app you will find all sorts of information about your favorite
+    movies, directors, actors, writers and lots more. Sign up and create lists of your favourite films or search genre’s
+    to find films you might want to watch, all from the one place.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>Description</th>
+        <th>HTTP Method</th>
+        <th>Query Parameters</th>
+        <th>Request Body</th>
+        <th>Response Body</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <!--Return a list of ALL movies to the user-->
+        <td>Get List of ALL movies</td>
+        <td>/movies</td>
+        <td>Returns a list of all movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>None</td>
+        <td>JSON of movie list array</td>
+      </tr>
+      <tr>
+        <!--Return data(description, genre, director, imageURL) about a single movie by title to the user-->
+        <td>Get Movie Data by Movie Title</td>
+        <td>/movies/:title</td>
+        <td>Returns information about a specific movie by title</td>
+        <td>GET</td>
+        <td>title(URL parameter)</td>
+        <td>None</td>
+        <td>JSON object by movie title</td>
+      </tr>
+      <tr>
+        <!-- Return data about a genre(description) by name/title(eg "Thriller")-->
+        <td>Get Movie Genre Data</td>
+        <td>/movies/genre/:genreName</td>
+        <td>Returns information about a specific genre</td>
+        <td>GET</td>
+        <td>name(URL parameter)</td>
+        <td>None</td>
+        <td>JSON object by movie genre</td>
+      </tr>
+      <tr>
+        <!--Return data about a director (bio, birth year, death year) by name;-->
+        <td>Get Directors information</td>
+        <td>/movies/director/:directorsName</td>
+        <td>Returns information about a specific director</td>
+        <td>GET</td>
+        <td>name(URL parameter)</td>
+        <td>None</td>
+        <td>JSON object</td>
+      </tr>
+      <tr>
+        <!--Allow new users to register;-->
+        <td>Register a New User</td>
+        <td>/users</td>
+        <td>Allows a new user to be registered</td>
+        <td>POST</td>
+        <td>username(URL parameter)</td>
+        <td>JSON object with New Users details</td>
+        <td>JSON object with New Users details and ID</td>
+      </tr>
+      <tr>
+        <!--Allow users to update their user info (username);-->
+        <td>Update a Users Information</td>
+        <td>/users/:id</td>
+        <td>Allows a user to update their information</td>
+        <td>PUT</td>
+        <td>user id(URL parameter)</td>
+        <td>JSON object of updated user information</td>
+        <td>Confirmation Message</td>
+      </tr>
+      <tr>
+        <!--Allow users to add a movie to their list of favorites (showing only a text that a movie has been added);-->
+        <td>Add a Movie to a Users Favourites</td>
+        <td>users/:id/:movieTitle</td>
+        <td>Allows a title to be added to a users favourite list</td>
+        <td>POST</td>
+        <td>user id(URL parameter)</td>
+        <td>None</td>
+        <td>Confirmation Message confirming new movie added to favourites</td>
+      </tr>
+      <tr>
+        <!--Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed);-->
+        <td>Remove a Title from a Users favourites list</td>
+        <td>users/:id/:movieTitle</td>
+        <td>Allows a title to be removed from favourites list</td>
+        <td>DELETE</td>
+        <td>user id, movieTitle(URL parameter)</td>
+        <td>None</td>
+        <td>Confirmation message the Movie Title has been deleted.</td>
+      </tr>
+      <tr>
+        <!--Allow existing users to deregister (showing only a text that a user email has been removed).-->
+        <td>De-register a user</td>
+        <td>/users/:id</td>
+        <td>Allows a user to be deleted from register</td>
+        <td>DELETE</td>
+        <td>user id(URL parameter)</td>
+        <td>None</td>
+        <td>Confirmation message User has been deregistered removed.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <script>src = "js/scripts.js"</script> -->
 </body>
 
 </html>
