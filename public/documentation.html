@@ -11,21 +11,22 @@
   <link rel="stylesheet" href="styles.css">
   <style>
     table {
-    width: 100%;
-}
+      width: 100%;
+    }
 
-table,
-th, 
-td {
-    padding: 20px;
-    text-align: left;
-}
+    table,
+    th,
+    td {
+      padding: 20px;
+      text-align: left;
+    }
   </style>
 </head>
 
 <body>
   <h1 class="Title">Movie Geek Documentation</h1>
-  <p class="Description">Welcome to my movie app. In the app you will find all sorts of information about your favorite
+  <p class="Description">Welcome to my Movie Geeks app. In the app you will find all sorts of information about your
+    favorite
     movies, directors, actors, writers and lots more. Sign up and create lists of your favourite films or search genre’s
     to find films you might want to watch, all from the one place.</p>
   <table>
@@ -54,8 +55,8 @@ td {
       </tr>
       <tr>
         <!--Return data(description, genre, director, imageURL) about a single movie by title to the user-->
-        <td>Get Movie Data by Movie Title</td>
-        <td>/movies/:title</td>
+        <td>Get Single Movie Data by Movie Title</td>
+        <td>/movies/:Title</td>
         <td>Returns information about a specific movie by title</td>
         <td>GET</td>
         <td>title(URL parameter)</td>
@@ -83,6 +84,16 @@ td {
         <td>JSON object</td>
       </tr>
       <tr>
+        <!--Returns a list of starring actors in a movie;-->
+        <td>Get Actors in a movie</td>
+        <td>/movies/actors/:Title</td>
+        <td>Returns a list of actors in a particular movie by it's title</td>
+        <td>GET</td>
+        <td>actors/title (URL parameter)</td>
+        <td>None</td>
+        <td>JSON object</td>
+      </tr>
+      <tr>
         <!--Allow new users to register;-->
         <td>Register a New User</td>
         <td>/users</td>
@@ -95,45 +106,211 @@ td {
       <tr>
         <!--Allow users to update their user info (username);-->
         <td>Update a Users Information</td>
-        <td>/users/:id</td>
+        <td>/users/:first_name/:last_name</td>
         <td>Allows a user to update their information</td>
         <td>PUT</td>
         <td>user id(URL parameter)</td>
         <td>JSON object of updated user information</td>
-        <td>Confirmation Message</td>
+        <td>Confirmation Message and updated details json</td>
       </tr>
       <tr>
         <!--Allow users to add a movie to their list of favorites (showing only a text that a movie has been added);-->
         <td>Add a Movie to a Users Favourites</td>
-        <td>users/:id/:movieTitle</td>
+        <td>users/:first_name/:last_name/movies/:movieID</td>
         <td>Allows a title to be added to a users favourite list</td>
         <td>POST</td>
         <td>user id(URL parameter)</td>
         <td>None</td>
-        <td>Confirmation Message confirming new movie added to favourites</td>
+        <td>Returns confirmation message with the users updated information</td>
       </tr>
       <tr>
         <!--Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed);-->
         <td>Remove a Title from a Users favourites list</td>
-        <td>users/:id/:movieTitle</td>
+        <td>users/:first_name/:last_name/movies/:movieID</td>
         <td>Allows a title to be removed from favourites list</td>
         <td>DELETE</td>
         <td>user id, movieTitle(URL parameter)</td>
         <td>None</td>
-        <td>Confirmation message the Movie Title has been deleted.</td>
+        <td>Returns confirmation message with the updated information</td>
       </tr>
       <tr>
         <!--Allow existing users to deregister (showing only a text that a user email has been removed).-->
         <td>De-register a user</td>
-        <td>/users/:id</td>
+        <td>/users/:first_name/:last_name</td>
         <td>Allows a user to be deleted from register</td>
         <td>DELETE</td>
         <td>user id(URL parameter)</td>
         <td>None</td>
-        <td>Confirmation message User has been deregistered removed.</td>
+        <td>Confirmation message User has been removed.</td>
       </tr>
     </tbody>
   </table>
+
+  <div>
+    <h2>Get A List of All Movies</h2>
+    <p><strong>Endpoint:</strong> Get /movies</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <pre>
+        "_id": "67db9231b80cc6db7460d735",
+        "Title": "La Dolce Vita",
+        "Description": "A series of stories following a week in the life of a philandering tabloid journalist living in Rome.",
+        "Genre": 
+            "Name": "Comedy",
+            "Description": "Comedy films are designed to elicit laughter from the audience. Comedies are light-hearted dramas, crafted to amuse, entertain, and provoke enjoyment."
+        "Director": 
+            "Name": "Federico Fellini",
+            "Bio": "Federico Fellini, born in Rimini, Italy, was a celebrated Italian film director and screenwriter, known for his distinctive style blending fantasy and baroque images with earthiness, and is considered one of the most influential filmmakers of all time",
+            "Born": "1920-01-20T00:00:00.000Z",
+            "Died": "1993-10-31T00:00:00.000Z"
+        "Actors": 
+            "Marcello Mastroianni",
+            "Anita Ekberg",
+            "Anouk Aimée"
+
+        "ImageURL": "https://www.imdb.com/title/tt0053779/mediaviewer/rm1699939328/?ref_=tt_ov_i",
+        "Featured": false
+    </pre>
+  </div>
+  <div>
+    <h2>Get Single Movie Data by Movie Title</h2>
+    <p><strong>Endpoint:</strong> GET /movies/:title</p>
+    <p><strong>Example:</strong> GET /movies/Breathless</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+
+    <br>
+    <p><strong>Example</strong></p>
+    <pre>
+        "Title": "Breathless",
+        "Description": "A young car thief kills a policeman and tries to persuade a girl to hide him.",
+        "Genre": { "Name": "Crime", "Description": "A genre involving criminal activities." },
+        "Director": { "Name": "Jean-Luc Godard", "Bio": "French director and film critic.", "Born": "1930-12-03" },
+        "Actors": ["Jean-Paul Belmondo", "Jean Seberg"]
+    </pre>
+  </div>
+  <div>
+    <h2>Get Movie Genre Data</h2>
+    <p><strong>Endpoint:</strong> GET /movies/genre/:genreName</p>
+    <p><strong>Example:</strong> GET /movies/genre/comedy </p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <pre>
+          "Name": "Drama",
+          "Description": "Drama is a type of film or TV programme that tells an exciting and generally serious story."
+    </pre>
+  </div>
+  <div>
+    <h2>Get Directors Information</h2>
+    <p><strong>Endpoint:</strong> GET /movies/director/:directorsName</p>
+    <p><strong>Example:</strong> GET /movies/director/Federico%20Fellini</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <pre>
+      "Name": "Federico Fellini",
+    "Bio": "Federico Fellini, born in Rimini, Italy, was a celebrated Italian film director and screenwriter, known for his distinctive style blending fantasy and baroque images with earthiness, and is considered one of the most influential filmmakers of all time",
+    "Born": "1920-01-20T00:00:00.000Z",
+    "Died": "1993-10-31T00:00:00.000Z"
+    </pre>
+  </div>
+  <div>
+    <h2>Get Actors In A Movie</h2>
+    <p><strong>Endpoint:</strong> GET /movies/actors/:Title</p>
+    <p><strong>Example:</strong> GET /movies/actors/La%20Dolce%20Vita</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <pre>
+      "Marcello Mastroianni",
+      "Anita Ekberg",
+      "Anouk Aimée"
+      </pre>
+  </div>
+  <div>
+    <h2>Register a New User</h2>
+    <p><strong>Endpoint:</strong> POST /users</p>
+    <br>
+    <p><strong>Request Body Example</strong></p>
+    <pre>
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "password": "securepassword",
+    "birthday": "1990-05-15"
+    </pre>
+    <br>
+    <p>NB. First Name, Last Name, Email and Password are required fields</p>
+  </div>
+  <div>
+    <h2>Update a Users Information</h2>
+    <p><strong>Endpoint:</strong> PUT /users/:first_name/:last_name</p>
+    <p><strong>Example:</strong> PUT /users/John/Doe</p>
+    <br>
+    <p><strong>Request Body Example</strong></p>
+    <pre>
+      "email": "john.doe@newmail.com",
+      "password": "newpassword123",
+      "birthday": "1990-05-15"
+    </pre>
+    <p>NB. You only need to input the information that requires updating</p>
+  </div>
+  <div>
+  <h2>Add a Movie to a Users Favourites</h2>
+    <p><strong>Endpoint:</strong> POST /users/:first_name/:last_name/movies/:movieID</p>
+    <p><strong>Example:</strong> POST /users/Michael/Jordan/movies/67db9231b80cc6db7460d736</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <pre>
+      "message": "Favourite movies has been updated",
+    "updatedUser": {
+        "_id": "67db935fb80cc6db7460d740",
+        "email": "michael.jordan@example.com",
+        "first_name": "Michael",
+        "last_name": "Jordan",
+        "birthday": "1993-11-30T00:00:00.000Z",
+        "password": "newpassword789",
+        "created_at": "2025-03-18T00:00:00.000Z",
+        "updated_at": "2025-03-18T00:00:00.000Z",
+        "favouriteMovies": ["67db9231b80cc6db7460d736"]
+    </pre>
+  </div>
+  <div>
+    <h2>Remove a Title from a Users Favourites</h2>
+    <p><strong>Endpoint:</strong> DELETE /users/:first_name/:last_name</p>
+    <p><strong>Example:</strong> DELELTE /users/Michael/Jordan</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <pre>
+      "message": "Favourite Movies has been updated",
+      "updatedUser": 
+        "_id": "67db935fb80cc6db7460d740",
+        "email": "michael.jordan@example.com",
+        "first_name": "Michael",
+        "last_name": "Jordan",
+        "birthday": "1993-11-30T00:00:00.000Z",
+        "password": "newpassword789",
+        "created_at": "2025-03-18T00:00:00.000Z",
+        "updated_at": "2025-03-18T00:00:00.000Z",
+        "favouriteMovies": []
+    </pre>
+  </div>
+  <div>
+    <h2>De-Register a User</h2>
+    <p><strong>Endpoint:</strong> DELETE /users/:first_name/:last_name</p>
+    <p><strong>Example:</strong> DELELTE /users/Shelly/France</p>
+    <br>
+    <p><strong>Response Example</strong></p>
+    <p>ShellyFrance was deleted.</p>
+  </div>
+  <br>
+  <div>
+    <h2>Error Messages</h2>
+    <p>If a request fails, the API will return an error message.</p>
+    <br>
+    <p><strong>Example Error Response:</strong></p>
+    <p>
+      "message": "User not found."
+    </p>
+  </div>
 
   <!-- <script>src = "js/scripts.js"</script> -->
 </body>

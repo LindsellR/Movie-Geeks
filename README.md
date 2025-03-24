@@ -31,7 +31,9 @@ How To Use the app.
 
 Dependencies 
 ------------
-
+node.js
+mongo.db
+mongoose
 
 Error Handling
 --------------
