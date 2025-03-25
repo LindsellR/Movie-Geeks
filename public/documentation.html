@@ -106,7 +106,7 @@
       <tr>
         <!--Allow users to update their user info (username);-->
         <td>Update a Users Information</td>
-        <td>/users/:first_name/:last_name</td>
+        <td>/users/:Username</td>
         <td>Allows a user to update their information</td>
         <td>PUT</td>
         <td>user id(URL parameter)</td>
@@ -116,7 +116,7 @@
       <tr>
         <!--Allow users to add a movie to their list of favorites (showing only a text that a movie has been added);-->
         <td>Add a Movie to a Users Favourites</td>
-        <td>users/:first_name/:last_name/movies/:movieID</td>
+        <td>users/:Username/movies/:movieID</td>
         <td>Allows a title to be added to a users favourite list</td>
         <td>POST</td>
         <td>user id(URL parameter)</td>
@@ -124,9 +124,9 @@
         <td>Returns confirmation message with the users updated information</td>
       </tr>
       <tr>
-        <!--Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed);-->
+        <!--Allow users to remove a movie from their list of favorites-->
         <td>Remove a Title from a Users favourites list</td>
-        <td>users/:first_name/:last_name/movies/:movieID</td>
+        <td>users/:Username/movies/:movieID</td>
         <td>Allows a title to be removed from favourites list</td>
         <td>DELETE</td>
         <td>user id, movieTitle(URL parameter)</td>
@@ -134,9 +134,9 @@
         <td>Returns confirmation message with the updated information</td>
       </tr>
       <tr>
-        <!--Allow existing users to deregister (showing only a text that a user email has been removed).-->
+        <!--Allow existing users to deregister .-->
         <td>De-register a user</td>
-        <td>/users/:first_name/:last_name</td>
+        <td>/users/:Username</td>
         <td>Allows a user to be deleted from register</td>
         <td>DELETE</td>
         <td>user id(URL parameter)</td>
@@ -231,8 +231,7 @@
     <br>
     <p><strong>Request Body Example</strong></p>
     <pre>
-    "first_name": "John",
-    "last_name": "Doe",
+    "Username": "JohnDoe90",
     "email": "john.doe@example.com",
     "password": "securepassword",
     "birthday": "1990-05-15"
@@ -242,8 +241,8 @@
   </div>
   <div>
     <h2>Update a Users Information</h2>
-    <p><strong>Endpoint:</strong> PUT /users/:first_name/:last_name</p>
-    <p><strong>Example:</strong> PUT /users/John/Doe</p>
+    <p><strong>Endpoint:</strong> PUT /users/:Username</p>
+    <p><strong>Example:</strong> PUT /users/JohnDoe90</p>
     <br>
     <p><strong>Request Body Example</strong></p>
     <pre>
@@ -255,8 +254,8 @@
   </div>
   <div>
   <h2>Add a Movie to a Users Favourites</h2>
-    <p><strong>Endpoint:</strong> POST /users/:first_name/:last_name/movies/:movieID</p>
-    <p><strong>Example:</strong> POST /users/Michael/Jordan/movies/67db9231b80cc6db7460d736</p>
+    <p><strong>Endpoint:</strong> POST /users/:Username/movies/:movieID</p>
+    <p><strong>Example:</strong> POST /users/Jordanmichael82/movies/67db9231b80cc6db7460d736</p>
     <br>
     <p><strong>Response Example</strong></p>
     <pre>
@@ -264,8 +263,7 @@
     "updatedUser": {
         "_id": "67db935fb80cc6db7460d740",
         "email": "michael.jordan@example.com",
-        "first_name": "Michael",
-        "last_name": "Jordan",
+        "Username": "Jordanmichael82",
         "birthday": "1993-11-30T00:00:00.000Z",
         "password": "newpassword789",
         "created_at": "2025-03-18T00:00:00.000Z",
@@ -275,8 +273,8 @@
   </div>
   <div>
     <h2>Remove a Title from a Users Favourites</h2>
-    <p><strong>Endpoint:</strong> DELETE /users/:first_name/:last_name</p>
-    <p><strong>Example:</strong> DELELTE /users/Michael/Jordan</p>
+    <p><strong>Endpoint:</strong> DELETE /users/:Username/movies/:movieID</p>
+    <p><strong>Example:</strong> DELELTE /users/Jordanmichael82/67db9231b80cc6db7460d736</p>
     <br>
     <p><strong>Response Example</strong></p>
     <pre>
@@ -284,8 +282,7 @@
       "updatedUser": 
         "_id": "67db935fb80cc6db7460d740",
         "email": "michael.jordan@example.com",
-        "first_name": "Michael",
-        "last_name": "Jordan",
+        "Username": "Jordanmichael82",
         "birthday": "1993-11-30T00:00:00.000Z",
         "password": "newpassword789",
         "created_at": "2025-03-18T00:00:00.000Z",
@@ -295,11 +292,11 @@
   </div>
   <div>
     <h2>De-Register a User</h2>
-    <p><strong>Endpoint:</strong> DELETE /users/:first_name/:last_name</p>
-    <p><strong>Example:</strong> DELELTE /users/Shelly/France</p>
+    <p><strong>Endpoint:</strong> DELETE /users/:Username</p>
+    <p><strong>Example:</strong> DELELTE /users/ShellyFrance90</p>
     <br>
     <p><strong>Response Example</strong></p>
-    <p>ShellyFrance was deleted.</p>
+    <p>ShellyFrance90 was deleted.</p>
   </div>
   <br>
   <div>

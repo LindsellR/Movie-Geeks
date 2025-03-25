@@ -92,23 +92,22 @@ app.get('/movies/actors/:Title', async (req, res) => {
 // allow users to register
 app.post('/users', async (req, res) => {
 
-  await Users.findOne({ first_name: req.body.first_name, last_name: req.body.last_name})
+  await Users.findOne({ Email: req.body.Email})
   .then((user) => {
     if (user) {
-      return res.status(400) .send(req.body.first_name + '' + req.body.last_name + 'already exists');
+      return res.status(400) .send(req.body.Email + ' already exists');
     } else{
       Users.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        password: req.body.password,
-        email: req.body.email,
-        birthday: req.body.birthday
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
       })
       .then ((user) =>{res.status(201).json(user) })
-      .catch((error) => { 
+      .catch((error) => {
         console.error(error);
         res.status(500).send('Error: Something broke!'); 
-      })
+      }) 
     }
   })
   .catch((error) => {
@@ -116,6 +115,88 @@ app.post('/users', async (req, res) => {
     res.status(500).send('Error: Something broke!');
   })
 });
+
+//Update a users info by name
+app.put('/users/:Username', async (req, res) => {
+ await Users.findOneAndUpdate(
+      { Username: req.params.Username},
+  {
+    $set:
+    {
+      Email: req.body.Email,
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Birthday: req.body.Birthday
+    }
+  },
+  {new: true}) //Makes sure the updated document is returned
+  .then((updatedUser) => {
+    res.json({
+     message: 'Users details have been updated',
+     updatedUser: updatedUser
+    })
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: Something Broke!'); 
+  })
+
+});
+
+//Add Movie to users favourite list
+app.post('/users/:Username/movies/:movieID', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username},
+    {
+      $push: {FavouriteMovies: req.params.movieID }
+    },
+    {new: true}) //Makes sure the updated document is returned
+    .then((updatedUser) => { 
+     res.json({
+      message: 'Favourite movies has been updated',
+      updatedUser: updatedUser});
+    })
+    .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: Something Broke!');
+  });
+});
+
+//Delete a movie from a users favourite list
+app.delete('/users/:Username/movies/:movieID', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username},
+    {
+      $pull: {FavouriteMovies: req.params.movieID }
+    },
+    {new: true}) //Makes sure the updated document is returned
+    .then((updatedUser) => { 
+     res.json({
+      message: 'Favourite Movies has been updated',
+      updatedUser: updatedUser
+    })
+    })
+    .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: Something Broke!');
+  });
+});
+
+//Delete a user
+app.delete('/users/:Username', async (req, res) => {
+  await Users.findOneAndDelete({
+    Username: req.params.Username
+  })
+  .then((user) => {
+    if(!user) {
+      req.status(400).send(req.params.Username + ' was not found.');
+    } else {
+      res.status(200).send(req.params.Username + ' was deleted.');
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: Something Broke!');
+  });
+})
 
 // //Read/Get all users
 // app.get('/users', async (req, res) => {
@@ -143,88 +224,6 @@ app.post('/users', async (req, res) => {
 //       res.status(500).send('Error: Something Broke!')
 //     });
 // });
-
-//Update a users info by name
-app.put('/users/:first_name/:last_name', async (req, res) => {
- await Users.findOneAndUpdate(
-      { first_name: req.params.first_name, last_name: req.params.last_name},
-  {
-    $set:
-    {
-      email: req.body.email,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      password: req.body.password,
-      birthday: req.body.birthday
-    }
-  },
-  {new: true}) //Makes sure the updated document is returned
-  .then((updatedUser) => {
-    res.json({
-     message: 'Users details have been updated',
-     updatedUser: updatedUser
-    })
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: Something Broke!'); 
-  })
-
-});
-
-//Add Movie to users favourite list
-app.post('/users/:first_name/:last_name/movies/:movieID', async (req, res) => {
-  await Users.findOneAndUpdate({ first_name: req.params.first_name, last_name: req.params.last_name},
-    {
-      $push: {favouriteMovies: req.params.movieID }
-    },
-    {new: true}) //Makes sure the updated document is returned
-    .then((updatedUser) => { 
-     res.json({
-      message: 'Favourite movies has been updated',
-      updatedUser: updatedUser});
-    })
-    .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: Something Broke!');
-  });
-});
-
-//Delete a movie from a users favourite list
-app.delete('/users/:first_name/:last_name/movies/:movieID', async (req, res) => {
-  await Users.findOneAndUpdate({ first_name: req.params.first_name, last_name: req.params.last_name},
-    {
-      $pull: {favouriteMovies: req.params.movieID }
-    },
-    {new: true}) //Makes sure the updated document is returned
-    .then((updatedUser) => { 
-     res.json({
-      message: 'Favourite Movies has been updated',
-      updatedUser: updatedUser
-    })
-    })
-    .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: Something Broke!');
-  });
-});
-
-app.delete('/users/:first_name/:last_name', async (req, res) => {
-  await Users.findOneAndDelete({
-    first_name: req.params.first_name, last_name: req.params.last_name
-  })
-  .then((user) => {
-    if(!user) {
-      req.status(400).send(req.params.first_name + req.params.last_name + ' was not found.');
-    } else {
-      res.status(200).send(req.params.first_name + '' + req.params.last_name + ' was deleted.');
-    }
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: Something Broke!');
-  });
-})
 
 app.use((req, res, next) => {
   if (/\/+$/.test(req.path) && req.path.length > 1) {
