@@ -1,5 +1,5 @@
 {
-  "name": "movie-api",
+  "name": "movie-geeks",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
   "engines": {
     "node": "22.x"
 }
