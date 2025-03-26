@@ -39,6 +39,10 @@ require('passport');
 
 app.use(morgan('common'));
 
+app.get('/', (req, res) => {
+  res.send('Welcome to Movie-Geeks API!');
+});
+
 //Return a list of all movies
 app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
   Movies.find()
