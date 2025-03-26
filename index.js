@@ -7,8 +7,23 @@ const mongoose = require('mongoose');
 const Models = require('./models.js')
 const Movies = Models.Movie;
 const Users = Models.User;
+const {check, validationResult} = require('express-validator');
+
+const cors = require('cors');
 
 
+let allowedOrigins = ['http//localhost:8080', 'http://testsite.com'];
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1) {
+      //If a specific origin isn't found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 mongoose.connect('mongodb://localhost:27017/mgDB'), 
   // {
@@ -93,16 +108,29 @@ app.get('/movies/actors/:Title', passport.authenticate('jwt', {session: false}),
 })
 
 // allow users to register
-app.post('/users', async (req, res) => {
-
-  await Users.findOne({ Email: req.body.Email})
+app.post('/users',
+  [
+    check('Username', 'Username is required').isLength({min:5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Email', 'Email does not appear to be valid').isEmail(),
+  ],
+  async (req, res) => {
+    //check validation object for errors
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  await Users.findOne({ Email: req.body.Email}) //Search to see if a user with the requested username already exists.
   .then((user) => {
     if (user) {
+      //if the user is found, send a response that it already exists
       return res.status(400) .send(req.body.Email + ' already exists');
     } else{
+
       Users.create({
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       })
@@ -120,20 +148,31 @@ app.post('/users', async (req, res) => {
 });
 
 //Update a users info by name
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), async (req, res) => {
-
+app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
+[
+  check('Username', 'Username is required').isLength({min:5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Email', 'Email does not appear to be valid').isEmail(),
+],
+async (req, res) => {
+   //check validation object for errors
+   let errors = validationResult(req);
+   if (!errors.isEmpty()) {
+     return res.status(422).json({ errors: errors.array() });
+   }
   //Condition to check here.
   if(req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission Denied');
   }
   //End condition.
+  let hashedPassword = Users.hashPassword(req.body.Password);
  await Users.findOneAndUpdate(
       { Username: req.params.Username},
   {
     $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Birthday: req.body.Birthday,
       Email: req.body.Email
     }
