@@ -1,7 +1,7 @@
 const express = require('express');
      morgan = require('morgan');
      bodyParser = require('body-parser');
-     uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js')
