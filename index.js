@@ -278,16 +278,16 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), a
 })
 
 // //Read/Get all users
-// app.get('/users', async (req, res) => {
-//   await Users.find()
-//     .then ((users) => {
-//       res.status(201).json(users)
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send('Error: something broke');
-//     });
-// });
+app.get('/users', async (req, res) => {
+  await Users.find()
+    .then ((users) => {
+      res.status(201).json(users)
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: something broke');
+    });
+});
 
 // //Read/Get a user by name
 // app.get('/users/:first_name/:last_name', async (req, res) => {
@@ -318,6 +318,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
   });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.'); 
-});
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+  
