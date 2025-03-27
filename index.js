@@ -31,11 +31,15 @@ app.use(cors({
   //   useUnifiedTopology: true
   // });
 
-mongoose.connect('process.env.CONNECTION_URI',  
- {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true
-  });
+  console.log("MongoDB URI:", process.env.CONNECTION_URI || "Not found");
+
+  mongoose.connect(process.env.CONNECTION_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+  })
+  .then(() => console.log("✅ MongoDB Connected!"))
+  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+  
 
 app.use(bodyParser.json());
 
