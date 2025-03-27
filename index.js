@@ -25,11 +25,17 @@ app.use(cors({
   }
 }));
 
-mongoose.connect('mongodb://localhost:27017/mgDB'), 
+//mongoose.connect('mongodb://localhost:27017/mgDB'), 
   // {
   //   useNewUrlParser: true, 
   //   useUnifiedTopology: true
   // });
+
+mongoose.connect(process.env.CONNECTION_URI,  
+ {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+  });
 
 app.use(bodyParser.json());
 
