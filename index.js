@@ -11,6 +11,8 @@ const {check, validationResult} = require('express-validator');
 
 const cors = require('cors');
 
+require('dotenv').config();
+
 
 let allowedOrigins = ['http//localhost:8080', 'http://testsite.com'];
 app.use(cors({
@@ -33,10 +35,7 @@ app.use(cors({
 
   console.log("MongoDB URI:", process.env.CONNECTION_URI || "Not found");
 
-  mongoose.connect(process.env.CONNECTION_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-  })
+  mongoose.connect(process.env.CONNECTION_URI)
   .then(() => console.log("✅ MongoDB Connected!"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
   
@@ -318,7 +317,10 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
   });
 
-  const port = process.env.PORT || 3000;
+  // module.exports = app;
+
+git
+  const port = process.env.PORT || 8080;
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
