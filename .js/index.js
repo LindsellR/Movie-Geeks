@@ -27,22 +27,14 @@ app.use(cors({
   }
 }));
 
-//mongoose.connect('mongodb://localhost:27017/mgDB'), 
-  // {
-  //   useNewUrlParser: true, 
-  //   useUnifiedTopology: true
-  // });
-
-  console.log("MongoDB URI:", process.env.CONNECTION_URI || "Not found");
-
   mongoose.connect(process.env.CONNECTION_URI)
-  .then(() => console.log("✅ MongoDB Connected!"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
+  .then(() => console.log("MongoDB Connected!"))
+  .catch((err) => console.error("MongoDB Connection Error:", err));
   
 
 app.use(bodyParser.json());
 
-let auth = require('./auth')(app);
+let auth = require('./auth.js')(app);
 const passport = require('passport');
 require('passport');
 
@@ -276,17 +268,17 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), a
   });
 })
 
-// //Read/Get all users
-app.get('/users', async (req, res) => {
-  await Users.find()
-    .then ((users) => {
-      res.status(201).json(users)
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: something broke');
-    });
-});
+// // //Read/Get all users
+// app.get('/users', async (req, res) => {
+//   await Users.find()
+//     .then ((users) => {
+//       res.status(201).json(users)
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       res.status(500).send('Error: something broke');
+//     });
+// });
 
 // //Read/Get a user by name
 // app.get('/users/:first_name/:last_name', async (req, res) => {
@@ -319,9 +311,8 @@ app.use((err, req, res, next) => {
 
   // module.exports = app;
 
-git
   const port = process.env.PORT || 8080;
-  app.listen(port, () => {
+  app.listen(port, '0.0.0.0',() => {
     console.log(`Server is running on port ${port}`);
   });
   
