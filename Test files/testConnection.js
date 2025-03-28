@@ -15,10 +15,10 @@ async function testMongoDBConnection() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('✅ MongoDB connected successfully!');
+    console.log('MongoDB connected successfully!');
     mongoose.connection.close();
   } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
+    console.error('MongoDB connection error:', error);
   }
 }
 
