@@ -25,9 +25,7 @@ module.exports = (router) => {
         }
         req.login(user, { session: false }, (error) => {
             if (error) {
-                if (error) {
-                    return res.status(500).json({ error: 'Login failed' });
-                }
+                req.send(error);
             }
             let token = generateJWTToken(user.toJSON());
             return res.json({ user, token});
