@@ -7,6 +7,7 @@ The objective of this Rest API is to build server side of a "Movies" web applica
 
 **Base URL**
 --------
+https://movie-geeks-one.vercel.app
 
 **Authentication**
 --------------
