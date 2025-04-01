@@ -104,6 +104,16 @@
         <td>JSON object with New Users details and ID</td>
       </tr>
       <tr>
+        <!--Login users ;-->
+        <td>Login to the app</td>
+        <td>/login?Username&Password</td>
+        <td>Allows a user to login and receive a token</td>
+        <td>POST</td>
+        <td>login, username and password</td>
+        <td>None</td>
+        <td>JSON object with New Users details, ID and token</td>
+      </tr>
+      <tr>
         <!--Allow users to update their user info (username);-->
         <td>Update a Users Information</td>
         <td>/users/:Username</td>
@@ -146,8 +156,9 @@
     </tbody>
   </table>
 
+  <h2>Using The Movie-Geeks App</h2>
   <div>
-    <h2>Get A List of All Movies</h2>
+    <h3>Get A List of All Movies</h3>
     <p><strong>Endpoint:</strong> Get /movies</p>
     <br>
     <p><strong>Response Example</strong></p>
@@ -173,7 +184,7 @@
     </pre>
   </div>
   <div>
-    <h2>Get Single Movie Data by Movie Title</h2>
+    <h3>Get Single Movie Data by Movie Title</h3>
     <p><strong>Endpoint:</strong> GET /movies/:title</p>
     <p><strong>Example:</strong> GET /movies/Breathless</p>
     <br>
@@ -190,7 +201,7 @@
     </pre>
   </div>
   <div>
-    <h2>Get Movie Genre Data</h2>
+    <h3>Get Movie Genre Data</h3>
     <p><strong>Endpoint:</strong> GET /movies/genre/:genreName</p>
     <p><strong>Example:</strong> GET /movies/genre/comedy </p>
     <br>
@@ -201,7 +212,7 @@
     </pre>
   </div>
   <div>
-    <h2>Get Directors Information</h2>
+    <h3>Get Directors Information</h3>
     <p><strong>Endpoint:</strong> GET /movies/director/:directorsName</p>
     <p><strong>Example:</strong> GET /movies/director/Federico%20Fellini</p>
     <br>
@@ -214,7 +225,7 @@
     </pre>
   </div>
   <div>
-    <h2>Get Actors In A Movie</h2>
+    <h3>Get Actors In A Movie</h3>
     <p><strong>Endpoint:</strong> GET /movies/actors/:Title</p>
     <p><strong>Example:</strong> GET /movies/actors/La%20Dolce%20Vita</p>
     <br>
@@ -226,7 +237,7 @@
       </pre>
   </div>
   <div>
-    <h2>Register a New User</h2>
+    <h3>Register a New User</h3>
     <p><strong>Endpoint:</strong> POST /users</p>
     <br>
     <p><strong>Request Body Example</strong></p>
@@ -237,10 +248,28 @@
     "birthday": "1990-05-15"
     </pre>
     <br>
-    <p>NB. First Name, Last Name, Email and Password are required fields</p>
+    <p>NB. Username, Email and Password are required fields. Username must be at least 5 characters long and use alphanumerical characters</p>
   </div>
   <div>
-    <h2>Update a Users Information</h2>
+    <h3>Uesr Login</h3>
+    <p><strong>Endpoint:</strong>Post /login?Username&Password</p>
+    <p>Once a User has registered they must login with their username and password. Once logged in they will receive a json response including a userID and Token to navigate the app. The password will be encrypted</p>
+    <p><strong>Response Example</strong></p>
+    {
+      "user": {
+          "_id": "67e62d16aef12345678da8a6",
+          "Email": "noone@notanemail.com",
+          "Username": "Whynot2012",
+          "Password": "$2b$10$40yoTTT457/SOsrRzh0kk.U/7uwUjlyKFRBxJuY7rXmnZsvFjDhgK",
+          "Birthday": "1985-08-09T00:00:00.000Z",
+          "FavouriteMovies": [],
+          "__v": 0
+      },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2U2MmQxNmFlZjRkMjI4YTE1ZGE4YTYiLCJFbWFpbCI6Im5vdG1lQG5vdG15ZW1haWwuY29tIiwiVXNlcm5hbWa1s2d3f4g5h6IiLCJQYXNzd29yZCI6IiQyYiQxMCQ0MHlvVFRUNDU3L1NPc3JSemgwa2suVS83dXdVamx5S0ZSQnhKdVk3clhtblpzdkZqRGhnSyIsIkJpcnRo0p9o8i7u6ywOVQwMDowMDowMC4wMDBaIiwiRmF2b3VyaXRlTW92aWVzIjpbXSwiX192IjowLCJpYXQiOjE3NDMyMjAxMjAsImV4cCI6MTc0MzgyNDkyMCwic3ViIjoiV2hva25vd3MyMDEyIn0.RZAOAJt9_JXmkivLmBkzHOSXyHnOclPvfOfRMnhlhPk"
+  }
+  </div>
+  <div>
+    <h3>Update a Users Information</h3>
     <p><strong>Endpoint:</strong> PUT /users/:Username</p>
     <p><strong>Example:</strong> PUT /users/JohnDoe90</p>
     <br>
@@ -253,7 +282,7 @@
     <p>NB. You only need to input the information that requires updating</p>
   </div>
   <div>
-  <h2>Add a Movie to a Users Favourites</h2>
+    <h3>Add a Movie to a Users Favourites</h3>
     <p><strong>Endpoint:</strong> POST /users/:Username/movies/:movieID</p>
     <p><strong>Example:</strong> POST /users/Jordanmichael82/movies/67db9231b80cc6db7460d736</p>
     <br>
@@ -272,7 +301,7 @@
     </pre>
   </div>
   <div>
-    <h2>Remove a Title from a Users Favourites</h2>
+    <h3>Remove a Title from a Users Favourites</h3>
     <p><strong>Endpoint:</strong> DELETE /users/:Username/movies/:movieID</p>
     <p><strong>Example:</strong> DELELTE /users/Jordanmichael82/67db9231b80cc6db7460d736</p>
     <br>
@@ -291,7 +320,7 @@
     </pre>
   </div>
   <div>
-    <h2>De-Register a User</h2>
+    <h3>De-Register a User</h3>
     <p><strong>Endpoint:</strong> DELETE /users/:Username</p>
     <p><strong>Example:</strong> DELELTE /users/ShellyFrance90</p>
     <br>
@@ -300,7 +329,7 @@
   </div>
   <br>
   <div>
-    <h2>Error Messages</h2>
+    <h3>Error Messages</h3>
     <p>If a request fails, the API will return an error message.</p>
     <br>
     <p><strong>Example Error Response:</strong></p>
