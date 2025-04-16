@@ -280,18 +280,18 @@ app.get('/users', async (req, res) => {
     });
 });
 
-//Read/Get a user by name
-app.get('/users/:Username/Password', async (req, res) => {
-   await Users.findOne({Username: req.params.Username, Password: req.params.Password})
-  .then((user)=> { 
-    if(!user) {
-      res.status(400).send(req.params.first_name + req.params.last_name + ' was not found.');
-    }
-    res.json(user);
+// Read/Get a user by username
+app.get('/users/:Username', async (req, res) => {
+  await Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send(`${req.params.Username} was not found.`);
+      }
+      res.status(200).json(user);
     })
-    .catch((err) =>{
+    .catch((err) => {
       console.error(err);
-      res.status(500).send('Error: Something Broke!')
+      res.status(500).send('Error: Something went wrong!');
     });
 });
 
