@@ -268,32 +268,32 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), a
   });
 })
 
-// // //Read/Get all users
-// app.get('/users', async (req, res) => {
-//   await Users.find()
-//     .then ((users) => {
-//       res.status(201).json(users)
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send('Error: something broke');
-//     });
-// });
+// //Read/Get all users
+app.get('/users', async (req, res) => {
+  await Users.find()
+    .then ((users) => {
+      res.status(201).json(users)
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: something broke');
+    });
+});
 
-// //Read/Get a user by name
-// app.get('/users/:first_name/:last_name', async (req, res) => {
-//    Users.findOne({first_name: req.params.first_name, last_name: req.params.last_name})
-//   .then((user)=> { 
-//     if(!user) {
-//       res.status(400).send(req.params.first_name + req.params.last_name + ' was not found.');
-//     }
-//     res.json(user);
-//     })
-//     .catch((err) =>{
-//       console.error(err);
-//       res.status(500).send('Error: Something Broke!')
-//     });
-// });
+//Read/Get a user by name
+app.get('/users/:Username/Password', async (req, res) => {
+   await Users.findOne({Username: req.params.Username, Password: req.params.Password})
+  .then((user)=> { 
+    if(!user) {
+      res.status(400).send(req.params.first_name + req.params.last_name + ' was not found.');
+    }
+    res.json(user);
+    })
+    .catch((err) =>{
+      console.error(err);
+      res.status(500).send('Error: Something Broke!')
+    });
+});
 
 app.use((req, res, next) => {
   if (/\/+$/.test(req.path) && req.path.length > 1) {
