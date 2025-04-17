@@ -206,7 +206,7 @@ app.post('/users/:Username/movies/:movieID', passport.authenticate('jwt', {sessi
   //End condition
   await Users.findOneAndUpdate({ Username: req.params.Username},
     {
-      $push: {FavouriteMovies: req.params.movieID }
+      $addToSet: {FavouriteMovies: req.params.movieID }
     },
     {new: true}) //Makes sure the updated document is returned
     .then((updatedUser) => { 
