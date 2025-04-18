@@ -153,48 +153,67 @@ app.post('/users',
 });
 
 //Update a users info by name
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
 [
-  check('Username', 'Username is required').isLength({min:5}),
+  check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Email', 'Email does not appear to be valid').isEmail(),
 ],
 async (req, res) => {
-   //check validation object for errors
-   let errors = validationResult(req);
-   if (!errors.isEmpty()) {
-     return res.status(422).json({ errors: errors.array() });
-   }
-  //Condition to check here.
-  if(req.user.Username !== req.params.Username) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission Denied');
   }
-  //End condition.
-  let hashedPassword = Users.hashPassword(req.body.Password);
- await Users.findOneAndUpdate(
-      { Username: req.params.Username},
-  {
-    $set:
-    {
-      Username: req.body.Username,
-      Password: hashedPassword,
-      Birthday: req.body.Birthday,
-      Email: req.body.Email
-    }
-  },
-  {new: true}) //Makes sure the updated document is returned
-  .then((updatedUser) => {
-    res.json({
-     message: 'Users details have been updated',
-     updatedUser: updatedUser
-    })
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: Something Broke!'); 
-  })
 
+  const normalizedUsername = req.body.Username.toLowerCase();
+
+  try {
+    // Check if username or email is already taken by someone else
+    const existingUser = await Users.findOne({
+      $or: [
+        { Username: normalizedUsername },
+        { Email: req.body.Email }
+      ],
+      Username: { $ne: req.params.Username }
+    });
+
+    if (existingUser) {
+      return res.status(409).send('Username or Email already in use');
+    }
+
+    const updateFields = {
+      Username: normalizedUsername,
+      Email: req.body.Email
+    };
+
+    if (req.body.Password) {
+      updateFields.Password = Users.hashPassword(req.body.Password);
+    }
+
+    const updatedUser = await Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      { $set: updateFields },
+      { new: true }
+    );
+
+    // Remove password before sending back
+    const { Password, ...safeUser } = updatedUser.toObject();
+
+    res.json({
+      message: 'User details have been updated',
+      updatedUser: safeUser
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error: Something Broke!');
+  }
 });
+
+
 
 //Add Movie to users favourite list
 app.post('/users/:Username/movies/:movieID', passport.authenticate('jwt', {session: false}), async (req, res) => {
