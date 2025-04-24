@@ -167,9 +167,10 @@ async (req, res) => {
     return res.status(422).json({ errors: errors.array() });
   }
 
-  if (req.user.Username !== req.params.Username) {
+  if (req.user.Username.toLowerCase() !== req.params.Username.toLowerCase()) {
     return res.status(400).send('Permission Denied');
   }
+  
 
   const normalizedUsername = req.body.Username.toLowerCase();
 
