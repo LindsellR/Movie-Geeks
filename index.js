@@ -167,12 +167,12 @@ async (req, res) => {
     return res.status(422).json({ errors: errors.array() });
   }
 
-  if (req.user.Username.toLowerCase() !== req.params.Username.toLowerCase()) {
+  if (req.user.Username !== req.params.Username) {
     return res.status(400).send('Permission Denied');
-  }
+  }  
   
 
-  const normalizedUsername = req.body.Username.toLowerCase();
+  const normalizedUsername = req.body.Username;
 
   try {
     // Check if username or email is already taken by someone else
