@@ -290,17 +290,17 @@ app.delete('/users/:Username', passport.authenticate('jwt', {session: false}), a
   });
 })
 
-// //Read/Get all users
-app.get('/users', async (req, res) => {
-  await Users.find()
-    .then ((users) => {
-      res.status(201).json(users)
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: something broke');
-    });
-});
+// // //Read/Get all users
+// app.get('/users', async (req, res) => {
+//   await Users.find()
+//     .then ((users) => {
+//       res.status(201).json(users)
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       res.status(500).send('Error: something broke');
+//     });
+// });
 
 // Read/Get a user by username
 app.get('/users/:Username', async (req, res) => {
