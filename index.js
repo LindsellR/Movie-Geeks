@@ -14,7 +14,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:3000', 'http://testsite.com', 'https://movie-geeks-classics.netlify.app'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:4000/', 'http://localhost:3000', 'http://testsite.com', 'https://movie-geeks-classics.netlify.app'];
 app.use(cors({
   origin: (origin, callback) => {
     if(!origin) return callback(null, true);
