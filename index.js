@@ -29,12 +29,14 @@ app.use(cors({
 
   app.options('*', cors())
 
+  app.use(express.json());
+
   mongoose.connect(process.env.CONNECTION_URI)
   .then(() => console.log("MongoDB Connected!"))
   .catch((err) => console.error("MongoDB Connection Error:", err));
   
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
 let auth = require('./auth.js')(app);
 const passport = require('passport');
