@@ -124,7 +124,7 @@
         <td>Confirmation Message and updated details json</td>
       </tr>
       <tr>
-        <!--Allow users to add a movie to their list of favorites (showing only a text that a movie has been added);-->
+        <!--Allow users to add a movie to their list of favourites (showing only a text that a movie has been added);-->
         <td>Add a Movie to a Users Favourites</td>
         <td>users/:Username/movies/:movieID</td>
         <td>Allows a title to be added to a users favourite list</td>
@@ -157,186 +157,385 @@
   </table>
 
   <h2>Using The Movie-Geeks App</h2>
-  <div>
-    <h3>Get A List of All Movies</h3>
-    <p><strong>Endpoint:</strong> Get /movies</p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <pre>
-        "_id": "67db9231b80cc6db7460d735",
-        "Title": "La Dolce Vita",
-        "Description": "A series of stories following a week in the life of a philandering tabloid journalist living in Rome.",
-        "Genre": 
-            "Name": "Comedy",
-            "Description": "Comedy films are designed to elicit laughter from the audience. Comedies are light-hearted dramas, crafted to amuse, entertain, and provoke enjoyment."
-        "Director": 
-            "Name": "Federico Fellini",
-            "Bio": "Federico Fellini, born in Rimini, Italy, was a celebrated Italian film director and screenwriter, known for his distinctive style blending fantasy and baroque images with earthiness, and is considered one of the most influential filmmakers of all time",
-            "Born": "1920-01-20T00:00:00.000Z",
-            "Died": "1993-10-31T00:00:00.000Z"
-        "Actors": 
-            "Marcello Mastroianni",
-            "Anita Ekberg",
-            "Anouk Aimée"
+  <div class="endpoint">
+    <h2>Get All Movies</h2>
 
-        "ImageURL": "https://www.imdb.com/title/tt0053779/mediaviewer/rm1699939328/?ref_=tt_ov_i",
-        "Featured": false
-    </pre>
-  </div>
-  <div>
-    <h3>Get Single Movie Data by Movie Title</h3>
-    <p><strong>Endpoint:</strong> GET /movies/:title</p>
-    <p><strong>Example:</strong> GET /movies/Breathless</p>
-    <br>
-    <p><strong>Response Example</strong></p>
+    <p><strong>Method:</strong> <code>GET</code></p>
+    <p><strong>Endpoint:</strong> <code>/movies</code></p>
+    <p><strong>Description:</strong> Returns a JSON array of all movies in the database.</p>
 
-    <br>
-    <p><strong>Example</strong></p>
-    <pre>
-        "Title": "Breathless",
-        "Description": "A young car thief kills a policeman and tries to persuade a girl to hide him.",
-        "Genre": { "Name": "Crime", "Description": "A genre involving criminal activities." },
-        "Director": { "Name": "Jean-Luc Godard", "Bio": "French director and film critic.", "Born": "1930-12-03" },
-        "Actors": ["Jean-Paul Belmondo", "Jean Seberg"]
-    </pre>
-  </div>
-  <div>
-    <h3>Get Movie Genre Data</h3>
-    <p><strong>Endpoint:</strong> GET /movies/genre/:genreName</p>
-    <p><strong>Example:</strong> GET /movies/genre/comedy </p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <pre>
-          "Name": "Drama",
-          "Description": "Drama is a type of film or TV programme that tells an exciting and generally serious story."
-    </pre>
-  </div>
-  <div>
-    <h3>Get Directors Information</h3>
-    <p><strong>Endpoint:</strong> GET /movies/director/:directorsName</p>
-    <p><strong>Example:</strong> GET /movies/director/Federico%20Fellini</p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <pre>
+    <h3>Query Parameters</h3>
+    <ul>
+      <li><em>None</em></li>
+    </ul>
+
+    <h3>Authentication</h3>
+    <p><strong>Required:</strong> Yes (JWT Bearer Token)</p>
+
+    <h3>Response</h3>
+    <p><strong>Status:</strong> <code>200 OK</code></p>
+    <p><strong>Type:</strong> <code>application/json</code></p>
+
+    <h4>Example Response:</h4>
+    <pre><code>[
+  {
+    "_id": "67db9231b80cc6db7460d735",
+    "Title": "La Dolce Vita",
+    "Description": "A series of stories following a week in the life of a philandering tabloid journalist living in Rome.",
+    "Genre": {
+      "Name": "Comedy",
+      "Description": "Comedy films are designed to elicit laughter from the audience. Comedies are light-hearted dramas, crafted to amuse, entertain, and provoke enjoyment."
+    },
+    "Director": {
       "Name": "Federico Fellini",
-    "Bio": "Federico Fellini, born in Rimini, Italy, was a celebrated Italian film director and screenwriter, known for his distinctive style blending fantasy and baroque images with earthiness, and is considered one of the most influential filmmakers of all time",
-    "Born": "1920-01-20T00:00:00.000Z",
-    "Died": "1993-10-31T00:00:00.000Z"
-    </pre>
-  </div>
-  <div>
-    <h3>Get Actors In A Movie</h3>
-    <p><strong>Endpoint:</strong> GET /movies/actors/:Title</p>
-    <p><strong>Example:</strong> GET /movies/actors/La%20Dolce%20Vita</p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <pre>
+      "Bio": "Federico Fellini, born in Rimini, Italy, was a celebrated Italian film director and screenwriter...",
+      "Born": "1920-01-20T00:00:00.000Z",
+      "Died": "1993-10-31T00:00:00.000Z"
+    },
+    "Actors": [
       "Marcello Mastroianni",
       "Anita Ekberg",
       "Anouk Aimée"
-      </pre>
-  </div>
-  <div>
-    <h3>Register a New User</h3>
-    <p><strong>Endpoint:</strong> POST /users</p>
-    <br>
-    <p><strong>Request Body Example</strong></p>
-    <pre>
-    "Username": "JohnDoe90",
-    "email": "john.doe@example.com",
-    "password": "securepassword",
-    "birthday": "1990-05-15"
-    </pre>
-    <br>
-    <p>NB. Username, Email and Password are required fields. Username must be at least 5 characters long and use alphanumerical characters</p>
-  </div>
-  <div>
-    <h3>Uesr Login</h3>
-    <p><strong>Endpoint:</strong>Post /login?Username&Password</p>
-    <p>Once a User has registered they must login with their username and password. Once logged in they will receive a json response including a userID and Token to navigate the app. The password will be encrypted</p>
-    <p><strong>Response Example</strong></p>
-    {
-      "user": {
-          "_id": "67e62d16aef12345678da8a6",
-          "Email": "noone@notanemail.com",
-          "Username": "Whynot2012",
-          "Password": "$2b$10$40yoTTT457/SOsrRzh0kk.U/7uwUjlyKFRBxJuY7rXmnZsvFjDhgK",
-          "Birthday": "1985-08-09T00:00:00.000Z",
-          "FavouriteMovies": [],
-          "__v": 0
-      },
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2U2MmQxNmFlZjRkMjI4YTE1ZGE4YTYiLCJFbWFpbCI6Im5vdG1lQG5vdG15ZW1haWwuY29tIiwiVXNlcm5hbWa1s2d3f4g5h6IiLCJQYXNzd29yZCI6IiQyYiQxMCQ0MHlvVFRUNDU3L1NPc3JSemgwa2suVS83dXdVamx5S0ZSQnhKdVk3clhtblpzdkZqRGhnSyIsIkJpcnRo0p9o8i7u6ywOVQwMDowMDowMC4wMDBaIiwiRmF2b3VyaXRlTW92aWVzIjpbXSwiX192IjowLCJpYXQiOjE3NDMyMjAxMjAsImV4cCI6MTc0MzgyNDkyMCwic3ViIjoiV2hva25vd3MyMDEyIn0.RZAOAJt9_JXmkivLmBkzHOSXyHnOclPvfOfRMnhlhPk"
+    ],
+    "ImageURL": "https://www.imdb.com/title/tt0053779/mediaviewer/rm1699939328/?ref_=tt_ov_i",
+    "Featured": false
   }
+]</code></pre>
+
+    <h3>Error Responses</h3>
+    <ul>
+      <li><strong>401 Unauthorized:</strong> If JWT is missing or invalid</li>
+      <li><strong>500 Internal Server Error:</strong> If something goes wrong on the server</li>
+    </ul>
   </div>
-  <div>
-    <h3>Update a Users Information</h3>
-    <p><strong>Endpoint:</strong> PUT /users/:Username</p>
-    <p><strong>Example:</strong> PUT /users/JohnDoe90</p>
-    <br>
-    <p><strong>Request Body Example</strong></p>
-    <pre>
-      "email": "john.doe@newmail.com",
-      "password": "newpassword123",
-      "birthday": "1990-05-15"
-    </pre>
-    <p>NB. You only need to input the information that requires updating</p>
-  </div>
-  <div>
-    <h3>Add a Movie to a Users Favourites</h3>
-    <p><strong>Endpoint:</strong> POST /users/:Username/movies/:movieID</p>
-    <p><strong>Example:</strong> POST /users/Jordanmichael82/movies/67db9231b80cc6db7460d736</p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <pre>
-      "message": "Favourite movies has been updated",
-    "updatedUser": {
-        "_id": "67db935fb80cc6db7460d740",
-        "email": "michael.jordan@example.com",
-        "Username": "Jordanmichael82",
-        "birthday": "1993-11-30T00:00:00.000Z",
-        "password": "newpassword789",
-        "created_at": "2025-03-18T00:00:00.000Z",
-        "updated_at": "2025-03-18T00:00:00.000Z",
-        "favouriteMovies": ["67db9231b80cc6db7460d736"]
-    </pre>
-  </div>
-  <div>
-    <h3>Remove a Title from a Users Favourites</h3>
-    <p><strong>Endpoint:</strong> DELETE /users/:Username/movies/:movieID</p>
-    <p><strong>Example:</strong> DELELTE /users/Jordanmichael82/67db9231b80cc6db7460d736</p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <pre>
-      "message": "Favourite Movies has been updated",
-      "updatedUser": 
-        "_id": "67db935fb80cc6db7460d740",
-        "email": "michael.jordan@example.com",
-        "Username": "Jordanmichael82",
-        "birthday": "1993-11-30T00:00:00.000Z",
-        "password": "newpassword789",
-        "created_at": "2025-03-18T00:00:00.000Z",
-        "updated_at": "2025-03-18T00:00:00.000Z",
-        "favouriteMovies": []
-    </pre>
-  </div>
-  <div>
-    <h3>De-Register a User</h3>
-    <p><strong>Endpoint:</strong> DELETE /users/:Username</p>
-    <p><strong>Example:</strong> DELELTE /users/ShellyFrance90</p>
-    <br>
-    <p><strong>Response Example</strong></p>
-    <p>ShellyFrance90 was deleted.</p>
-  </div>
-  <br>
-  <div>
-    <h3>Error Messages</h3>
-    <p>If a request fails, the API will return an error message.</p>
-    <br>
-    <p><strong>Example Error Response:</strong></p>
-    <p>
-      "message": "User not found."
-    </p>
-  </div>
+
+  <section id="get-movie-by-title">
+    <h2>GET /movies/:title</h2>
+    <p><strong>Description:</strong> Returns data about a single movie by title.</p>
+
+    <h3>Parameters</h3>
+    <ul>
+      <li><strong>title</strong> <code>(string)</code> – The title of the movie to retrieve.</li>
+    </ul>
+
+    <h3>Example Request</h3>
+    <pre><code>GET /movies/Breathless</code></pre>
+
+    <h3>Success Response</h3>
+    <p><strong>Code:</strong> 200 OK</p>
+    <p><strong>Content:</strong></p>
+    <pre><code>{
+  "Title": "Breathless",
+  "Description": "A young car thief kills a policeman and tries to persuade a girl to hide him.",
+  "Genre": {
+    "Name": "Crime",
+    "Description": "A genre involving criminal activities."
+  },
+  "Director": {
+    "Name": "Jean-Luc Godard",
+    "Bio": "French director and film critic.",
+    "Born": "1930-12-03"
+  },
+  "Actors": [
+    "Jean-Paul Belmondo",
+    "Jean Seberg"
+  ]
+}</code></pre>
+
+    <h3>Error Responses</h3>
+    <ul>
+      <li><strong>404 Not Found:</strong> Movie with given title not found.</li>
+      <li><strong>500 Internal Server Error:</strong> Unexpected server error.</li>
+    </ul>
+  </section>
+
+  <section id="get-genre-by-name">
+    <h2>GET /movies/genre/:genreName</h2>
+    <p><strong>Description:</strong> Returns data about a specific genre by name.</p>
+
+    <h3>Parameters</h3>
+    <ul>
+      <li><strong>genreName</strong> <code>(string)</code> – The name of the genre to retrieve.</li>
+    </ul>
+
+    <h3>Example Request</h3>
+    <pre><code>GET /movies/genre/comedy</code></pre>
+
+    <h3>Success Response</h3>
+    <p><strong>Code:</strong> 200 OK</p>
+    <p><strong>Content:</strong></p>
+    <pre><code>{
+  "Name": "Drama",
+  "Description": "Drama is a type of film or TV programme that tells an exciting and generally serious story."
+}</code></pre>
+
+    <h3>Error Responses</h3>
+    <ul>
+      <li><strong>404 Not Found:</strong> Genre not found.</li>
+      <li><strong>500 Internal Server Error:</strong> Unexpected server error.</li>
+    </ul>
+  </section>
+
+  <section id="get-director-by-name">
+    <h2>GET /movies/director/:directorsName</h2>
+    <p><strong>Description:</strong> Returns detailed information about a director by name.</p>
+
+    <h3>Parameters</h3>
+    <ul>
+      <li><strong>directorsName</strong> <code>(string)</code> – The full name of the director (URL encoded if
+        necessary).</li>
+    </ul>
+
+    <h3>Example Request</h3>
+    <pre><code>GET /movies/director/Federico%20Fellini</code></pre>
+
+    <h3>Success Response</h3>
+    <p><strong>Code:</strong> 200 OK</p>
+    <p><strong>Content:</strong></p>
+    <pre><code>{
+  "Name": "Federico Fellini",
+  "Bio": "Federico Fellini, born in Rimini, Italy, was a celebrated Italian film director and screenwriter...",
+  "Born": "1920-01-20T00:00:00.000Z",
+  "Died": "1993-10-31T00:00:00.000Z"
+}</code></pre>
+
+    <h3>Error Responses</h3>
+    <ul>
+      <li><strong>404 Not Found:</strong> Director not found.</li>
+      <li><strong>500 Internal Server Error:</strong> Unexpected server error.</li>
+    </ul>
+  </section>
+
+  <section id="get-actors-by-title">
+    <h2>GET /movies/actors/:Title</h2>
+    <p><strong>Description:</strong> Returns a list of actors featured in a specific movie by title.</p>
+
+    <h3>Parameters</h3>
+    <ul>
+      <li><strong>Title</strong> <code>(string)</code> – The title of the movie.</li>
+    </ul>
+
+    <h3>Example Request</h3>
+    <pre><code>GET /movies/actors/La%20Dolce%20Vita</code></pre>
+
+    <h3>Success Response</h3>
+    <p><strong>Code:</strong> 200 OK</p>
+    <p><strong>Content:</strong></p>
+    <pre><code>[
+  "Marcello Mastroianni",
+  "Anita Ekberg",
+  "Anouk Aimée"
+]</code></pre>
+
+    <h3>Error Responses</h3>
+    <ul>
+      <li><strong>404 Not Found:</strong> Movie not found or no actors listed.</li>
+      <li><strong>500 Internal Server Error:</strong> Unexpected server error.</li>
+    </ul>
+  </section>
+
+<section id="register-user">
+  <h2>POST /users</h2>
+  <p><strong>Description:</strong> Registers a new user. Required fields include a valid username, email, and password.</p>
+
+  <h3>Request Body</h3>
+  <ul>
+    <li><strong>Username</strong> <code>(string)</code> – Required. Must be at least 5 alphanumeric characters.</li>
+    <li><strong>Email</strong> <code>(string)</code> – Required. Must be a valid email address.</li>
+    <li><strong>Password</strong> <code>(string)</code> – Required.</li>
+    <li><strong>Birthday</strong> <code>(string)</code> – Optional. Format: YYYY-MM-DD.</li>
+  </ul>
+
+  <h3>Example Request Body</h3>
+  <pre><code>{
+  "Username": "JohnDoe90",
+  "email": "john.doe@example.com",
+  "password": "securepassword",
+  "birthday": "1990-05-15"
+}</code></pre>
+
+  <p><strong>Note:</strong> Username, Email, and Password are required. Username must be at least 5 characters long and use only alphanumeric characters.</p>
+
+  <h3>Success Response</h3>
+  <p><strong>Code:</strong> 201 Created</p>
+  <p><strong>Content:</strong> JSON object representing the newly created user (excluding password).</p>
+
+  <h3>Error Responses</h3>
+  <ul>
+    <li><strong>400 Bad Request:</strong> Validation failed (e.g., missing fields, invalid format).</li>
+    <li><strong>409 Conflict:</strong> Username or email already in use.</li>
+    <li><strong>500 Internal Server Error:</strong> Server error while creating user.</li>
+  </ul>
+</section>
+
+  <section id="user-login">
+  <h2>POST /login</h2>
+  <p><strong>Description:</strong> Authenticates a user by verifying their username and password. Upon successful login, the user receives a JSON Web Token (JWT) and user data. The password is stored in encrypted form and not returned in plain text.</p>
+
+  <h3>Query Parameters</h3>
+  <ul>
+    <li><strong>Username</strong> <code>(string)</code> – Required. The registered username.</li>
+    <li><strong>Password</strong> <code>(string)</code> – Required. The corresponding password.</li>
+  </ul>
+
+  <h3>Example Request</h3>
+  <pre><code>POST /login?Username=Whynot2012&Password=securepassword</code></pre>
+
+  <h3>Success Response</h3>
+  <p><strong>Code:</strong> 200 OK</p>
+  <p><strong>Content:</strong> JSON object containing user details and authentication token.</p>
+
+  <h3>Response Example</h3>
+  <pre><code>{
+  "user": {
+    "_id": "67e62d16aef12345678da8a6",
+    "Email": "noone@notanemail.com",
+    "Username": "Whynot2012",
+    "Password": "$2b$10$40yoTTT457/SOsrRzh0kk.U/7uwUjlyKFRBxJuY7rXmnZsvFjDhgK",
+    "Birthday": "1985-08-09T00:00:00.000Z",
+    "FavouriteMovies": [],
+    "__v": 0
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}</code></pre>
+
+  <h3>Error Responses</h3>
+  <ul>
+    <li><strong>401 Unauthorized:</strong> Incorrect username or password.</li>
+    <li><strong>500 Internal Server Error:</strong> Server error during authentication.</li>
+  </ul>
+</section>
+
+  <section id="update-user">
+  <h2>PUT /users/:Username</h2>
+  <p><strong>Description:</strong> Allows an existing user to update their profile details. Only the fields provided in the request body will be updated; all others will remain unchanged.</p>
+
+  <h3>Path Parameters</h3>
+  <ul>
+    <li><strong>Username</strong> <code>(string)</code> – Required. The current username of the user to update.</li>
+  </ul>
+
+  <h3>Example Request</h3>
+  <pre><code>PUT /users/JohnDoe90</code></pre>
+
+  <h3>Request Body (JSON)</h3>
+  <pre><code>{
+  "email": "john.doe@newmail.com",
+  "password": "newpassword123",
+  "birthday": "1990-05-15"
+}</code></pre>
+  <p><em>Note: You only need to include the fields you wish to update.</em></p>
+
+  <h3>Success Response</h3>
+  <p><strong>Code:</strong> 200 OK</p>
+  <p><strong>Content:</strong> Updated user object</p>
+
+  <h3>Response Example</h3>
+  <pre><code>{
+  "_id": "67db9231b80cc6db7460d735",
+  "Username": "JohnDoe90",
+  "Email": "john.doe@newmail.com",
+  "Password": "$2b$10$EwhP.abc123Hashed",
+  "Birthday": "1990-05-15T00:00:00.000Z",
+  "FavouriteMovies": [],
+  "__v": 0
+}</code></pre>
+
+  <h3>Error Responses</h3>
+  <ul>
+    <li><strong>400 Bad Request:</strong> Invalid input or validation error.</li>
+    <li><strong>404 Not Found:</strong> User not found.</li>
+    <li><strong>500 Internal Server Error:</strong> Server failed to process the update.</li>
+  </ul>
+</section>
+
+  <section id="add-favorite">
+  <h2>POST /users/:Username/movies/:movieID</h2>
+  <p><strong>Description:</strong> Adds the specified movie to a user’s list of favourite movies.</p>
+
+  <h3>Example Request</h3>
+  <pre><code>POST /users/Jordanmichael82/movies/67db9231b80cc6db7460d736</code></pre>
+
+  <h3>Success Response</h3>
+  <p><strong>Code:</strong> 200 OK</p>
+  <p><strong>Content:</strong> A message and the updated user object</p>
+
+  <h3>Response Example</h3>
+  <pre><code>{
+  "message": "Favourite movies has been updated",
+  "updatedUser": {
+    "_id": "67db935fb80cc6db7460d740",
+    "email": "michael.jordan@example.com",
+    "Username": "Jordanmichael82",
+    "birthday": "1993-11-30T00:00:00.000Z",
+    "password": "newpassword789",
+    "created_at": "2025-03-18T00:00:00.000Z",
+    "updated_at": "2025-03-18T00:00:00.000Z",
+    "favouriteMovies": ["67db9231b80cc6db7460d736"]
+  }
+}</code></pre>
+</section>
+
+ <section id="remove-favorite">
+  <h2>DELETE /users/:Username/movies/:movieID</h2>
+  <p><strong>Description:</strong> Removes the specified movie from the user's list of favourite movies.</p>
+
+  <h3>Example Request</h3>
+  <pre><code>DELETE /users/Jordanmichael82/movies/67db9231b80cc6db7460d736</code></pre>
+
+  <h3>Success Response</h3>
+  <p><strong>Code:</strong> 200 OK</p>
+  <p><strong>Content:</strong> A message and the updated user object</p>
+
+  <h3>Response Example</h3>
+  <pre><code>{
+  "message": "Favourite Movies has been updated",
+  "updatedUser": {
+    "_id": "67db935fb80cc6db7460d740",
+    "email": "michael.jordan@example.com",
+    "Username": "Jordanmichael82",
+    "birthday": "1993-11-30T00:00:00.000Z",
+    "password": "newpassword789",
+    "created_at": "2025-03-18T00:00:00.000Z",
+    "updated_at": "2025-03-18T00:00:00.000Z",
+    "favouriteMovies": []
+  }
+}</code></pre>
+</section>
+
+ <section id="delete-user">
+  <h2>DELETE /users/:Username</h2>
+  <p><strong>Description:</strong> Permanently deletes a user and their data from the database.</p>
+
+  <h3>Example Request</h3>
+  <pre><code>DELETE /users/ShellyFrance90</code></pre>
+
+  <h3>Success Response</h3>
+  <p><strong>Code:</strong> 200 OK</p>
+  <p><strong>Content:</strong> A plain message confirming deletion</p>
+
+  <h3>Response Example</h3>
+  <pre><code>"ShellyFrance90 was deleted."</code></pre>
+</section>
+
+<section id="errors">
+  <h2>Error Responses</h2>
+  <p>If a request fails, the API will respond with an appropriate HTTP status code and a JSON error message.</p>
+
+  <h3>Example Error Response</h3>
+  <pre><code>{
+  "message": "User not found."
+}</code></pre>
+
+  <h3>Common Error Codes</h3>
+  <ul>
+    <li><strong>400 Bad Request:</strong> Missing or invalid fields in the request</li>
+    <li><strong>401 Unauthorized:</strong> Invalid credentials or missing token</li>
+    <li><strong>403 Forbidden:</strong> Token does not grant access to this resource</li>
+    <li><strong>404 Not Found:</strong> Resource could not be located</li>
+    <li><strong>500 Internal Server Error:</strong> A problem occurred on the server</li>
+  </ul>
+</section>
 
   <!-- <script>src = "js/scripts.js"</script> -->
 </body>
