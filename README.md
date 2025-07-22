@@ -138,3 +138,6 @@ You can find the client application here:
 https://movie-geeks-classics.netlify.app/login
 
 
+### AI Assistance Disclosure
+
+Portions of this documentation were produced with the assistance of AI tools (e.g., OpenAI's ChatGPT). The final content has been reviewed and verified by the project developer for accuracy and alignment with the project.
