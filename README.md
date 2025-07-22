@@ -62,52 +62,53 @@ Authorization: Bearer <your_token>
 
 ## Installation
 
-1. **Clone the repository:**
 
-```bash
+
+
+1. ### Clone the repository:
+
 git clone https://github.com/yourusername/movie-geek-api.git
 cd movie-geek-api
 
-2. **Install Dependencies:**
+2. ### Install Dependencies:
 
 npm install
 
-3. **Environment Setup**
+3. ### Environment Setup
 
 Create a .env file in the root directory and add the following:
 
 MONGODB_URI=<your MongoDB URI>
 JWT_SECRET=<your secret key>
 
-4. **Run the app locally:**
+4. ### Run the app locally:
 
 npm start
 
-## Dependencies
+Dependencies
 ------------
-"bcrypt": "^5.1.1",
-"body-parser": "^1.20.3",
-"cors": "^2.8.5",
-"dotenv": "^16.4.7",
-"express": "^4.21.2",
-"express-validator": "^7.2.1",
-"jsonwebtoken": "^9.0.2",
-"mongoose": "^8.12.1",
-"morgan": "^1.10.0",
-"passport": "^0.7.0",
-"passport-jwt": "^4.0.1",
-"passport-local": "^1.0.0",
+"bcrypt": "^5.1.1",  
+"body-parser": "^1.20.3",  
+"cors": "^2.8.5". 
+"dotenv": "^16.4.7",  
+"express": "^4.21.2",  
+"express-validator": "^7.2.1",  
+"jsonwebtoken": "^9.0.2",  
+"mongoose": "^8.12.1",  
+"morgan": "^1.10.0",  
+"passport": "^0.7.0",  
+"passport-jwt": "^4.0.1",  
+"passport-local": "^1.0.0",  
 "uuid": "^9.0.1"
 
-Install them via:
+Install them via:  
 npm install
 
-
-## API Documentation with JSDoc
+### API Documentation with JSDoc
 
 You can generate static documentation using JSDoc.
 
-### Generate Docs:
+Generate Docs:  
 npx jsdoc index.js passport.js models.js -d docs
 
 ### View Docs:
@@ -117,9 +118,9 @@ docs/index.html
 
 This will include documentation for:
 
-index.js (Express routes)
-passport.js (authentication logic)
-models.js (Mongoose schemas)
+- index.js (Express routes)
+- passport.js (authentication logic)
+- models.js (Mongoose schemas)
 
 ### Error Handling
 
@@ -128,13 +129,16 @@ The API uses structured error messages and appropriate HTTP status codes. Common
 - 400 Bad request
 - 401 Unauthorized
 - 404 Not found
-- 500 Server error
+- 500 Server error.  
 Logging is handled with morgan.
 
 
 ### Frontend
 
-You can find the client application here:
+You can find the client application here:  
 https://movie-geeks-classics.netlify.app/login
 
 
+#### AI Assistance Disclosure
+
+Portions of this documentation were produced with the assistance of AI tools (e.g., OpenAI's ChatGPT). The final content has been reviewed and verified by the project developer for accuracy and alignment with the project.
