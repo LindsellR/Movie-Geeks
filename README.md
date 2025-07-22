@@ -1,4 +1,4 @@
-# 🎬 Movie Geek API
+# 🎬 Movie Geeks API
 
 ## Overview
 
